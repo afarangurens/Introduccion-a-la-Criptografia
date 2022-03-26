@@ -47,8 +47,10 @@ def separate_message_in_pairs(message):
 
 
 def search_letter_index(pair, table):
-    # print(pair)
-    # print([[(i,j) for j in range(len(table)) if table[i][j] in pair] for i in range(len(table))])
+    # Boring solution
+    # return [pos for pos, x in np.ndenumerate(table) if x in pair]
+
+    # Cool solution
     return ft.reduce(
         lambda i, j: i+j, [[(i,j) for j in range(len(table)) if table[i][j] in pair] for i in range(len(table))]
     )
