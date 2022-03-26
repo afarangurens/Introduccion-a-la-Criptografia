@@ -1,3 +1,4 @@
+from math import log
 
 menu_options = {
         1: 'Encrypt a message',
@@ -58,5 +59,10 @@ def caesars_cipher():
             print('Please enter a number between 1 and 3.')
 
 
-caesars_cipher()
+def bullshit_code(message):
+    words = open("words-by-frequency.txt").read().split()
+
+#caesars_cipher()
+
+a = "itisclaimedtheearliestknownreferencetothistypeofcipherisinthekamasutrawhichsayswomenshouldlearntheartofsecretwritingtoconcealtheirliasons"
 
