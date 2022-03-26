@@ -56,6 +56,47 @@ def search_letter_index(pair, table):
     )
 
 
+def get_all_indexes(pair, table):
+
+    temp = [search_letter_index(pair[x], table) for x in range(len(pair))]
+    return [temp[i][0] for i in range(len(temp))]
+
+
+def encrypt(message, key):
+    encrypted_message = []
+    key_table = build_key_table(key)
+    pairs = separate_message_in_pairs(message)
+
+    indexes = get_all_indexes(pairs, key_table)
+
+    for i in range(0,len(indexes), 2):
+        # If both letters are in same column
+        if indexes[i][1] == indexes[i+1][1]:
+
+            x1 = (indexes[i][0] + 1) % 5
+            y1 = indexes[i][1]
+            x2 = (indexes[i+1][0] + 1) % 5
+            y2 = indexes[i+1][1]
+            encrypted_message.append(key_table[x1][y1])
+            encrypted_message.append(key_table[x2][y2])
+            print("1")
+            print(encrypted_message)
+        # If both letters are in same row
+        elif indexes[i][0] == indexes[i + 1][0]:
+            x1 = indexes[i][0]
+            y1 = (indexes[i][1] + 1) % 5
+            x2 = indexes[i + 1][0]
+            y2 = (indexes[i + 1][1] + 1) % 5
+            encrypted_message.append(key_table[x1][y1])
+            encrypted_message.append(key_table[x2][y2])
+            print("2")
+            print(encrypted_message)
+        else:
+            pass
+
+    return encrypted_message
+
+
 # Input message
 message = list(input().replace(" ", "").replace("j", "i"))
 # Receives a String, lower cases it and removes all blank (" ") spaces from it.
@@ -64,7 +105,14 @@ key = list(input().lower().replace(" ", "").replace("j", "i"))
 key_table = build_key_table(key)
 pairs = separate_message_in_pairs(message)
 print(np.matrix(key_table))
-print(pairs)
 
+print(encrypt(message, key))
+
+# print(pairs)
+
+"""
 print(search_letter_index(pairs[0:2], key_table))
+index = search_letter_index(pairs[0:2], key_table)
+print(key_table[index[0][0]][index[0][1]])
+"""
 
