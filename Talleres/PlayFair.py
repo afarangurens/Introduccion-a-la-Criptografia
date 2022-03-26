@@ -101,7 +101,7 @@ def encrypt(message, key):
 
 
 def decrypt(message, key):
-    message = message.replace(" ", "").lower()
+    message = message.replace(" ", "").lower().replace("j", "i")
     decrypted_message = []
     key_table = build_key_table(key)
     pairs = separate_message_in_pairs(message)
@@ -135,7 +135,6 @@ def decrypt(message, key):
 
     for i in range(1, len(decrypted_message)-2):
         if decrypted_message[i] == "x":
-            print(decrypted_message[i-1], decrypted_message[i+1])
             if decrypted_message[i-1] == decrypted_message[i+1]:
                 decrypted_message.pop(i)
 
@@ -171,15 +170,17 @@ def play_fair():
             print(" Enter the cipher's key")
             key = list(input().lower().replace(" ", "").replace("j", "i"))
             encrypted = encrypt(message, key)
+            print("The encrypted message is: ")
             print_message(encrypted)
             print("\n")
 
         elif option == 2:
             print(" Enter the Message to Decrypt")
-            message = list(input().replace(" ", "").replace("j", "i"))
+            message = input()
             print(" Enter the cipher's key")
             key = list(input().lower().replace(" ", "").replace("j", "i"))
             decrypted = decrypt(message, key)
+            print("The decrypted message is: ")
             print("".join(decrypted))
             print("\n")
 
@@ -191,19 +192,7 @@ def play_fair():
 
 
 """
-# Input message
-message = list(input().replace(" ", "").replace("j", "i"))
-# Receives a String, lower cases it and removes all blank (" ") spaces from it.
-key = list(input().lower().replace(" ", "").replace("j", "i"))
-
-
-asd = "wedllkhwlylfxpqphfdlhyhwoyylkp"
 asd2 = "ZO MH LC HY ZK MN SO NQ DL KT OQ CY KI EC LK SO YI EQ PQ RX EY KR WM NS DL GY LD GF AB YA QN YE AP GN IX PG HY YS NB HT EC TL KF VN RP YT PU PF CY EB YA WM KI MP LF UZ LH TC YH NP CK KL LY YT KI GB DH CY EC RD GN CL GO IH YE TY KI XO UY VN SC LX KF MX PW"
-
-encrypted = encrypt(message, key)
-decrypted = decrypt(asd2, key)
-print("".join(encrypted))
-print("".join(decrypted))
 """
 
 play_fair()
