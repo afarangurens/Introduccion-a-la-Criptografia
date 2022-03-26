@@ -7,6 +7,7 @@ menu_options = {
         3: 'Exit',
     }
 
+
 # Removes the duplicates in a list of characters whilst maintaining insertion order
 def remove_duplicates(sequence):
     # A set to extract all the unique characters in 'sequence'
@@ -18,13 +19,16 @@ def remove_duplicates(sequence):
     return [x for x in sequence if not (x in unique_letters or unique_letters.add(x))]
 
 
+# Concatenates the unique letters in key word with the alphabets & constructs the string that is to become the key_table
 def concat_key_w_alphabet(unique_words_key):
     alphabet = "abcdefghiklmnopqrstuvwxyz"
     sequence = unique_words_key + list(alphabet)
     temp = set()
+    # Returns the sequence of letters in order given the keyword, list comprehension works the same as remove_duplicates
     return [x for x in sequence if not (x in temp or temp.add(x))]
 
 
+# Builds the key table given the string modified by concat key w alphabet
 def build_key_table(key):
     key_table = [[x for x in range(5)] for y in range(5)]
     treated_key = remove_duplicates(key)
@@ -37,6 +41,7 @@ def build_key_table(key):
     return key_table
 
 
+# Separates the received messaged in pairs, as the PlayFair Cipher suggests
 def separate_message_in_pairs(message):
     i = 0
     while i < len(message):
@@ -50,16 +55,19 @@ def separate_message_in_pairs(message):
     return message
 
 
+# Searches the index of each letter within the key_table
 def search_letter_index(pair, table):
     # Boring solution
     # return [pos for pos, x in np.ndenumerate(table) if x in pair]
 
+    # lambda function so it repeats the extraction of the pair of index for each letter of the sequence (pair)
     # Cool solution
     return ft.reduce(
         lambda i, j: i+j, [[(i,j) for j in range(len(table)) if table[i][j] in pair] for i in range(len(table))]
     )
 
 
+# Gets all the pair of indexes of all the letters, so they can be encrypted/decrypted using the playfair rules
 def get_all_indexes(pair, table):
     temp = [search_letter_index(pair[x], table) for x in range(len(pair))]
     return [temp[i][0] for i in range(len(temp))]
@@ -192,7 +200,9 @@ def play_fair():
 
 
 """
-asd2 = "ZO MH LC HY ZK MN SO NQ DL KT OQ CY KI EC LK SO YI EQ PQ RX EY KR WM NS DL GY LD GF AB YA QN YE AP GN IX PG HY YS NB HT EC TL KF VN RP YT PU PF CY EB YA WM KI MP LF UZ LH TC YH NP CK KL LY YT KI GB DH CY EC RD GN CL GO IH YE TY KI XO UY VN SC LX KF MX PW"
+Slides excercise: 
+message = "ZO MH LC HY ZK MN SO NQ DL KT OQ CY KI EC LK SO YI EQ PQ RX EY KR WM NS DL GY LD GF AB YA QN YE AP GN IX PG HY YS NB HT EC TL KF VN RP YT PU PF CY EB YA WM KI MP LF UZ LH TC YH NP CK KL LY YT KI GB DH CY EC RD GN CL GO IH YE TY KI XO UY VN SC LX KF MX PW"
+key = "yoan pinzon"
 """
 
 play_fair()
