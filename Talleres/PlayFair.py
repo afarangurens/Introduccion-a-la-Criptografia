@@ -1,6 +1,11 @@
 import numpy as np
 import functools as ft
 
+menu_options = {
+        1: 'Encrypt a message',
+        2: 'Decrypt a message',
+        3: 'Exit',
+    }
 
 # Removes the duplicates in a list of characters whilst maintaining insertion order
 def remove_duplicates(sequence):
@@ -42,7 +47,6 @@ def separate_message_in_pairs(message):
         if message[i] == message[i+1]:
             message.insert(i+1, "x")
         i += 2
-
     return message
 
 
@@ -57,7 +61,6 @@ def search_letter_index(pair, table):
 
 
 def get_all_indexes(pair, table):
-
     temp = [search_letter_index(pair[x], table) for x in range(len(pair))]
     return [temp[i][0] for i in range(len(temp))]
 
@@ -79,8 +82,6 @@ def encrypt(message, key):
             y2 = indexes[i+1][1]
             encrypted_message.append(key_table[x1][y1])
             encrypted_message.append(key_table[x2][y2])
-            print("1")
-            print(encrypted_message)
         # If both letters are in same row
         elif indexes[i][0] == indexes[i + 1][0]:
             x1 = indexes[i][0]
@@ -89,30 +90,120 @@ def encrypt(message, key):
             y2 = (indexes[i + 1][1] + 1) % 5
             encrypted_message.append(key_table[x1][y1])
             encrypted_message.append(key_table[x2][y2])
-            print("2")
-            print(encrypted_message)
         else:
-            pass
+            x1, y1 = indexes[i][0], indexes[i+1][1]
+            x2, y2 = indexes[i+1][0], indexes[i][1]
+
+            encrypted_message.append(key_table[x1][y1])
+            encrypted_message.append(key_table[x2][y2])
 
     return encrypted_message
 
 
+def decrypt(message, key):
+    message = message.replace(" ", "").lower()
+    decrypted_message = []
+    key_table = build_key_table(key)
+    pairs = separate_message_in_pairs(message)
+    indexes = get_all_indexes(pairs, key_table)
+
+    for i in range(0, len(indexes), 2):
+        # If both letters are in same column
+        if indexes[i][1] == indexes[i + 1][1]:
+
+            x1 = (indexes[i][0] - 1) % 5
+            y1 = indexes[i][1]
+            x2 = (indexes[i + 1][0] - 1) % 5
+            y2 = indexes[i + 1][1]
+            decrypted_message.append(key_table[x1][y1])
+            decrypted_message.append(key_table[x2][y2])
+        # If both letters are in same row
+        elif indexes[i][0] == indexes[i + 1][0]:
+            x1 = indexes[i][0]
+            y1 = (indexes[i][1] - 1) % 5
+            x2 = indexes[i + 1][0]
+            y2 = (indexes[i + 1][1] - 1) % 5
+            decrypted_message.append(key_table[x1][y1])
+            decrypted_message.append(key_table[x2][y2])
+        else:
+            x1, y1 = indexes[i][0], indexes[i + 1][1]
+            x2, y2 = indexes[i + 1][0], indexes[i][1]
+
+            decrypted_message.append(key_table[x1][y1])
+            decrypted_message.append(key_table[x2][y2])
+
+
+    for i in range(1, len(decrypted_message)-2):
+        if decrypted_message[i] == "x":
+            print(decrypted_message[i-1], decrypted_message[i+1])
+            if decrypted_message[i-1] == decrypted_message[i+1]:
+                decrypted_message.pop(i)
+
+    return decrypted_message
+
+
+def print_menu():
+    print("Welcome to PlayFair Cipher, choose your option: ")
+    for key in menu_options.keys():
+        print(key, '--', menu_options[key])
+
+
+def print_message(message):
+    for i in range(len(message)):
+        print(message[i], end='')
+        if (i+1) % 2 == 0:
+            print(" ", end='')
+
+
+def play_fair():
+    while True:
+        print_menu()
+        option = ''
+        try:
+            option = int(input('Enter your choice: '))
+        except:
+            print('Not an option. Please enter a number ...')
+
+        if option == 1:
+            print(" Enter the Message to Encrypt")
+            message = list(input().replace(" ", "").replace("j", "i"))
+            # Receives a String, lower cases it and removes all blank (" ") spaces from it.
+            print(" Enter the cipher's key")
+            key = list(input().lower().replace(" ", "").replace("j", "i"))
+            encrypted = encrypt(message, key)
+            print_message(encrypted)
+            print("\n")
+
+        elif option == 2:
+            print(" Enter the Message to Decrypt")
+            message = list(input().replace(" ", "").replace("j", "i"))
+            print(" Enter the cipher's key")
+            key = list(input().lower().replace(" ", "").replace("j", "i"))
+            decrypted = decrypt(message, key)
+            print("".join(decrypted))
+            print("\n")
+
+        elif option == 3:
+            print('Thanks message before exiting')
+            exit()
+        else:
+            print('Invalid option. Please enter a number between 1 and 3.')
+
+
+"""
 # Input message
 message = list(input().replace(" ", "").replace("j", "i"))
 # Receives a String, lower cases it and removes all blank (" ") spaces from it.
 key = list(input().lower().replace(" ", "").replace("j", "i"))
 
-key_table = build_key_table(key)
-pairs = separate_message_in_pairs(message)
-print(np.matrix(key_table))
 
-print(encrypt(message, key))
+asd = "wedllkhwlylfxpqphfdlhyhwoyylkp"
+asd2 = "ZO MH LC HY ZK MN SO NQ DL KT OQ CY KI EC LK SO YI EQ PQ RX EY KR WM NS DL GY LD GF AB YA QN YE AP GN IX PG HY YS NB HT EC TL KF VN RP YT PU PF CY EB YA WM KI MP LF UZ LH TC YH NP CK KL LY YT KI GB DH CY EC RD GN CL GO IH YE TY KI XO UY VN SC LX KF MX PW"
 
-# print(pairs)
-
-"""
-print(search_letter_index(pairs[0:2], key_table))
-index = search_letter_index(pairs[0:2], key_table)
-print(key_table[index[0][0]][index[0][1]])
+encrypted = encrypt(message, key)
+decrypted = decrypt(asd2, key)
+print("".join(encrypted))
+print("".join(decrypted))
 """
 
+play_fair()
