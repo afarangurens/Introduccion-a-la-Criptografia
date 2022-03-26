@@ -1,4 +1,5 @@
 import numpy as np
+import functools as ft
 
 
 # Removes the duplicates in a list of characters whilst maintaining insertion order
@@ -32,7 +33,6 @@ def build_key_table(key):
 
 
 def separate_message_in_pairs(message):
-
     i = 0
     while i < len(message):
         if i == len(message) - 1:
@@ -46,6 +46,14 @@ def separate_message_in_pairs(message):
     return message
 
 
+def search_letter_index(pair, table):
+    # print(pair)
+    # print([[(i,j) for j in range(len(table)) if table[i][j] in pair] for i in range(len(table))])
+    return ft.reduce(
+        lambda i, j: i+j, [[(i,j) for j in range(len(table)) if table[i][j] in pair] for i in range(len(table))]
+    )
+
+
 # Input message
 message = list(input().replace(" ", "").replace("j", "i"))
 # Receives a String, lower cases it and removes all blank (" ") spaces from it.
@@ -53,6 +61,8 @@ key = list(input().lower().replace(" ", "").replace("j", "i"))
 
 key_table = build_key_table(key)
 pairs = separate_message_in_pairs(message)
-# print(np.matrix(key_table))
+print(np.matrix(key_table))
 print(pairs)
+
+print(search_letter_index(pairs[0:2], key_table))
 
