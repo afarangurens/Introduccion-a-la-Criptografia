@@ -125,7 +125,6 @@ def vigenere_cipher():
         if option == 1:
             print(" Enter the Message to Encrypt")
             message = list(input().replace(" ", "").lower())
-            print(len(message))
             # Receives a String, lower cases it and removes all blank (" ") spaces from it.
             print(" Enter the cipher's key")
             key_word = list(input().replace(" ", "").lower())
@@ -139,7 +138,6 @@ def vigenere_cipher():
         elif option == 2:
             print(" Enter the Message to Encrypt")
             message = list(input().replace(" ", "").lower())
-            print(len(message))
             # Receives a String, lower cases it and removes all blank (" ") spaces from it.
             print(" Enter the cipher's key")
             key_word = list(input().replace(" ", "").lower())
