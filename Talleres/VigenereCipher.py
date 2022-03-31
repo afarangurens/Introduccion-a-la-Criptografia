@@ -88,5 +88,44 @@ def infer_spaces(s):
     return " ".join(reversed(out))
 
 
-y = ord("n") - 97
-x = ord("l") - 97
+def encrypt(message, key):
+    key = construct_key(key)
+    pairs = [(ord(message[i]) - 97, ord(key[i]) - 97) for i in range(len(message))]
+
+    return [cipher_table[pairs[i][0]][pairs[i][1]] for i in range(len(pairs))]
+
+
+def decrypt(key, message):
+    key = construct_key(key)
+    return "".join([chr(int(cipher_table[ord(key[i]) - 97].index(message[i]))+97) for i in range(len(message))])
+
+
+def construct_key(key_word):
+    return [key_word[i % len(key_word)] for i in range(len(message))]
+
+
+def print_encoded_message(message, t):
+    for i in range(len(message)):
+        print(message[i], end='')
+        if (i+1) % t == 0:
+            print(" ", end='')
+
+
+message = list(input().replace(" ", "").lower())
+key_word = list(input().replace(" ", "").lower())
+t = int(input())
+
+
+key = construct_key(key_word)
+
+a = encrypt(message, key)
+
+b = "".join(a)
+
+print_encoded_message(b, t)
+
+
+
+
+
+print(infer_spaces(decrypt(key, message)))
