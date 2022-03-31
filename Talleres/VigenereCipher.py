@@ -89,18 +89,18 @@ def infer_spaces(s):
 
 
 def encrypt(message, key):
-    key = construct_key(key)
+    key = construct_key(key, message)
     pairs = [(ord(message[i]) - 97, ord(key[i]) - 97) for i in range(len(message))]
 
     return [cipher_table[pairs[i][0]][pairs[i][1]] for i in range(len(pairs))]
 
 
-def decrypt(key, message):
-    key = construct_key(key)
+def decrypt(message, key):
+    key = construct_key(key, message)
     return "".join([chr(int(cipher_table[ord(key[i]) - 97].index(message[i]))+97) for i in range(len(message))])
 
 
-def construct_key(key_word):
+def construct_key(key_word, message):
     return [key_word[i % len(key_word)] for i in range(len(message))]
 
 
@@ -111,21 +111,59 @@ def print_encoded_message(message, t):
             print(" ", end='')
 
 
-message = list(input().replace(" ", "").lower())
-key_word = list(input().replace(" ", "").lower())
-t = int(input())
+def vigenere_cipher():
+    while True:
+        print_menu()
+        option = ''
+        try:
+            option = int(input('Enter your choice: '))
+        except:
+            print('Not an option. Please enter a number ...')
+
+        if option == 1:
+            print(" Enter the Message to Encrypt")
+            message = list(input().replace(" ", "").lower())
+            print(len(message))
+            # Receives a String, lower cases it and removes all blank (" ") spaces from it.
+            print(" Enter the cipher's key")
+            key_word = list(input().replace(" ", "").lower())
+            print(" Enter t")
+            t = int(input())
+            encrypted = encrypt(message, key_word)
+            print("The encrypted message is: ")
+            print_encoded_message("".join(encrypted), t)
+            print("\n")
+
+        elif option == 2:
+            print(" Enter the Message to Encrypt")
+            message = list(input().replace(" ", "").lower())
+            print(len(message))
+            # Receives a String, lower cases it and removes all blank (" ") spaces from it.
+            print(" Enter the cipher's key")
+            key_word = list(input().replace(" ", "").lower())
+            print(" Enter t")
+            t = int(input())
+            decrypted = decrypt(message, key_word)
+            print("The decrypted message is: ")
+            mess = "".join(decrypted)
+            print(infer_spaces(decrypted))
+            print("\n")
+
+        elif option == 3:
+            print('Thanks message before exiting')
+            exit()
+        else:
+            print('Invalid option. Please enter a number between 1 and 3.')
 
 
-key = construct_key(key_word)
+"""
+Slides exercises:
+message1 = "TO BE OR NOT TO BE THAT IS THE QUESTION"
+key1 = RELATIONS
+t1 = 5
+message2 = "THERE IS A SECRET PASSAGE BEHIND THE PICTURE FRAME"
+key2 = CRYPTO
+t2 = 3
+"""
 
-a = encrypt(message, key)
-
-b = "".join(a)
-
-print_encoded_message(b, t)
-
-
-
-
-
-print(infer_spaces(decrypt(key, message)))
+vigenere_cipher()
