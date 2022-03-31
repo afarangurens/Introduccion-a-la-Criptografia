@@ -209,6 +209,7 @@ def play_fair():
         if option == 1:
             print(" Enter the Message to Encrypt")
             message = list(input().replace(" ", "").replace("j", "i"))
+            print(len(message))
             # Receives a String, lower cases it and removes all blank (" ") spaces from it.
             print(" Enter the cipher's key")
             key = list(input().lower().replace(" ", "").replace("j", "i"))

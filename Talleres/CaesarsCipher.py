@@ -92,5 +92,12 @@ def caesars_cipher():
             print('Please enter a number between 1 and 3.')
 
 
+"""
+Slide excercises:
+encrypt_message = "we will attack at dawn through the left flank"
+message1 = "WKLVL VHAWU HPHOB LQVHF XUHHQ FUBSW LRQGR QRWXV HLWWR SURWH FWYDO XDEOH LQIRU PDWLR Q"
+message2 = "LWLVF ODLPH GWKHH DUOLH VWNQR ZQUHI HUHQF HWRWK LVWBS HRIFL SKHUL VLQWK HNDPD VXWUD ZKLFK VDBVZ RPHQV KRXOG OHDUQ WKHDU WRIVH FUHWZ ULWLQ JWRFR QFHDO WKHLU OLDVR QV"
+"""
+
 caesars_cipher()
 
