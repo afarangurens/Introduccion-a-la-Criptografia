@@ -9,7 +9,7 @@ menu_options = {
 
 
 def print_menu():
-    print("Welcome to Caesar's Cipher, choose your option: ")
+    print("Welcome to Vigenere Cipher, choose your option: ")
     for key in menu_options.keys():
         print(key, '--', menu_options[key])
 
@@ -27,7 +27,7 @@ def construct_cipher_table():
 
     print(initialized_table)
 
-
+# Table created using construct_cipher_table() function
 cipher_table = [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
                 ['b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a'],
                 ['c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b'],
@@ -56,6 +56,8 @@ cipher_table = [['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
                 ['z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y']]
 
 
+# Code to separate a string in separated english words
+# Code accepted answer at: https://stackoverflow.com/questions/8870261/how-to-split-text-without-spaces-into-list-of-words
 def infer_spaces(s):
     words = open("words-by-frequency.txt").read().split()
     wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
