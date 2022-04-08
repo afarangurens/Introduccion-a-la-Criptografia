@@ -3,7 +3,6 @@ import numpy as np
 
 grille = []
 
-
 def initialize_grille(n):
     global grille
     grille = [[0 for i in range(n)] for j in range(n)]
@@ -44,6 +43,10 @@ def initialize_interface(n):
 
     init_grill_button = tk.Button(root, text="Reset Grille", command=lambda: cipher(n))
     init_grill_button.grid(row=0, column=n + 1)
+
+    decipher_button = tk.Button(root, text="decipher", command=lambda: decipher(n))
+    decipher_button.grid(row=1, column=n + 1)
+
     label = tk.Label(root, text="")
     label.grid(row=n, column=0, columnspan=n, sticky="new")
 
@@ -56,8 +59,9 @@ def initialize_interface(n):
 def cipher(n):
     global grille
 
-    plain_text = "JIMATTACKSATDAWN"
-    #plain_text = "TESHN INCIG LSRGY LRIUS PITSA TLILM REENS ATTOG SIAWG IPVER TOTEH HVAEA XITDT UAIME RANPM TLHIE I"
+    # plain_text = "JIMATTACKSATDAWN"
+    plain_text = "JKTDSAATWIAMCNAT"
+
 
     text = list(plain_text.replace(" ", ""))
 
@@ -77,6 +81,32 @@ def cipher(n):
         matrix = rotate_anticlockwise(matrix)
 
     print("".join([j for sub in matrix_encrypted for j in sub]))
+
+
+def decipher(n):
+    global grille
+
+    # plain_text = "JKTDSAATWIAMCNAT"
+    plain_text = "TESHN INCIG LSRGY LRIUS PITSA TLILM REENS ATTOG SIAWG IPVER TOTEH HVAEA XITDT UAIME RANPM TLHIE I"
+    text = list(plain_text.replace(" ", ""))
+
+    a = [text[i:i + n] for i in range(0, len(text), n)]
+
+    print(np.matrix(a))
+
+    text_decrypted = []
+    matrix = grille
+    while text:
+        print(np.matrix(matrix))
+        for i in range(n):
+            for j in range(n):
+                if matrix[i][j] != 0:
+                    print(a[i][j])
+                    text_decrypted.append(a[i][j])
+                    text = text[1:]
+        matrix = rotate_anticlockwise(matrix)
+
+    print(text_decrypted)
 
 
 n = int(input())
